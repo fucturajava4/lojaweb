@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,6 +18,7 @@ import br.recife.fucturajava4.model.AtributosIndex;
  */
 //Está mapeado em /src/main/webapp/WEB-INF/spring-context.xml
 @Controller //Anotado como controlador de requisições.
+@Transactional //Anotado como gerente de ttransações
 public class SiteController {
 	
 	/**

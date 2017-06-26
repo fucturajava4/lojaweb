@@ -40,5 +40,24 @@
 	<mvc:interceptors>
 		<bean class="br.recife.fucturajava4.interceptor.MainInterceptor"></bean>
 	</mvc:interceptors>
-
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	    <property name="driverClassName" value="org.h2.Driver"/>
+	    <property name="url" value="jdbc:h2:./dbloja;MODE=MySQL;MV_STORE=FALSE;AUTO_SERVER=TRUE"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="$senha"/>
+	</bean>
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+  		<property name="dataSource" ref="dataSource" />
+  		<property name="persistenceUnitName" value="dbloja"/>
+	  	<property name="jpaVendorAdapter">
+	    	<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+	  	</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
 </beans>
