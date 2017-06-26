@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.recife.fucturajava4.model.AtributosIndex;
+
 /**
  * Controlador de recebimento(requests) e entrega(responses)
  * @author douglas.f.filho
@@ -31,13 +33,20 @@ public class SiteController {
 		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		String data = fmt.format(hoje.getTime());
 		
-		model.addAttribute("titulo", titulo);
-		model.addAttribute("mensagem", mensagem);
-		model.addAttribute("autor", autor);
-		model.addAttribute("data", data);
+		AtributosIndex attr = new AtributosIndex();
+		attr.setTitulo(titulo);
+		attr.setMensagem(mensagem);
+		attr.setAutor(autor);
+		attr.setData(data);
+		
+		model.addAttribute("atributos", attr);
 		
 		//Retorna a página src/main/webapp/WEB-INF/views/index.jsp
 		return "index";
+	}
+	
+	private void adicionarAtributosAPagina(Model model){
+		
 	}
 	
 }

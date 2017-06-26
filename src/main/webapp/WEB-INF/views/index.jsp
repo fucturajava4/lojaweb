@@ -9,10 +9,10 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="titulo">${titulo}</div>
-			<div class="mensagem">${mensagem}</div>
-			<div class="autor">${autor}</div>
-			<div class="data">${data}</div>
+			<p class="titulo">${atributos.titulo}</p>
+			<p class="mensagem">${atributos.mensagem}</p>
+			<p class="autor">${atributos.autor}</p>
+			<p class="data">${atributos.data}</p>
 		</div>
 	</body>
 </html>
