@@ -14,5 +14,11 @@
 			<p class="autor">${atributos.autor}</p>
 			<p class="data">${atributos.data}</p>
 		</div>
+		<form method="post" action="adicionarUsuario">
+			Nome: <input type="text" name="nome"/><br>
+			E-mail: <input type="text" name="email"/><br>
+			Senha: <input type="password" name="senha"/><br>
+			<button type="submit">Cadastrar Usuário</button>
+		</form>
 	</body>
 </html>

@@ -4,12 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.recife.fucturajava4.dao.UsuarioDao;
 import br.recife.fucturajava4.model.AtributosIndex;
+import br.recife.fucturajava4.model.Usuario;
 
 /**
  * Controlador de recebimento(requests) e entrega(responses)
@@ -20,6 +24,10 @@ import br.recife.fucturajava4.model.AtributosIndex;
 @Controller //Anotado como controlador de requisições.
 @Transactional //Anotado como gerente de ttransações
 public class SiteController {
+	
+	@Autowired
+	@Qualifier("usuarioJpa")
+	private UsuarioDao tabelaUsuario;
 	
 	/**
 	 * Método que usado como primeira url do site ou quando é chamado "/home"
@@ -47,8 +55,11 @@ public class SiteController {
 		return "index";
 	}
 	
-	private void adicionarAtributosAPagina(Model model){
+	@RequestMapping("adicionarUsuario")
+	public String adicionarUsuario(Usuario usuario){
+		tabelaUsuario.cadastrar(usuario);
 		
+		return "redirect:home";
 	}
 	
 }
