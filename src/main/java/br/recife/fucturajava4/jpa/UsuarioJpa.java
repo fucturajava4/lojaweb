@@ -18,13 +18,42 @@ public class UsuarioJpa implements UsuarioDao{
 	EntityManager manager;
 	
 	@Override
-	public void cadastrar(Usuario usuario) {
-		manager.persist(usuario);
+	public String cadastrar(Usuario usuario) {
+		if(podeCadastrar(usuario)){
+			manager.persist(usuario);
+			return "Usuário cadastrado com exito.";
+		}
+		else
+			return "Já existe usuário cadastrado com este nome ou e-mail.";
 	}
 
+	private boolean podeCadastrar(Usuario usuario){
+		Query query = manager.createQuery("select u from Usuario as u where u.nome = :nome or u.email = :email");
+		query.setParameter("nome", usuario.getNome());
+		query.setParameter("email", usuario.getEmail());
+		Usuario cadastrado = null;
+		
+		try{
+			cadastrado = (Usuario) query.getSingleResult();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if(cadastrado == null)
+			return true;
+		else
+			return false;
+	}
+	
 	@Override
-	public void atualizar(Usuario usuario) {
-		manager.merge(usuario);
+	public String atualizar(Usuario usuario) {
+		if(podeCadastrar(usuario)){
+			manager.merge(usuario);
+			return "Usuário atualizado com exito.";
+		}
+		else
+			return "Já existe usuário cadastrado com este nome ou e-mail.";
 	}
 
 	@Override

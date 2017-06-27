@@ -24,6 +24,8 @@ import br.recife.fucturajava4.model.Usuario;
 @Controller //Anotado como controlador de requisições.
 @Transactional //Anotado como gerente de ttransações
 public class SiteController {
+	private static String mensagem = "";
+	
 	
 	@Autowired
 	@Qualifier("usuarioJpa")
@@ -35,30 +37,36 @@ public class SiteController {
 	 */
 	@RequestMapping(value={"/","home"})
 	public String home(Model model){
-		String titulo = "Loja WEB";
-		String mensagem = "Seja bem vindo à nossa loja!";
-		String autor = "Turma Java4 - Fuctura";
-		
 		Calendar hoje = Calendar.getInstance(new Locale("pt","BR"));
 		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		String data = fmt.format(hoje.getTime());
 		
 		AtributosIndex attr = new AtributosIndex();
-		attr.setTitulo(titulo);
-		attr.setMensagem(mensagem);
-		attr.setAutor(autor);
+		attr.setTitulo("Loja WEB");
+		attr.setMensagem("Seja bem vindo à nossa loja!");
+		attr.setAutor("Turma Java4 - Fuctura");
 		attr.setData(data);
 		
 		model.addAttribute("atributos", attr);
+		
+		if(mensagem != null && !mensagem.equals("")){
+			model.addAttribute("mensagem", mensagem);
+			mensagem = "";
+		}
 		
 		//Retorna a página src/main/webapp/WEB-INF/views/index.jsp
 		return "index";
 	}
 	
 	@RequestMapping("adicionarUsuario")
-	public String adicionarUsuario(Usuario usuario){
-		tabelaUsuario.cadastrar(usuario);
-		
+	public String adicionarUsuario(Usuario usuario, Model model){
+		mensagem = tabelaUsuario.cadastrar(usuario);
+		return "redirect:home";
+	}
+	
+	@RequestMapping("atualizarUsuario")
+	public String atualizarUsuario(Usuario usuario, Model model){
+		mensagem = tabelaUsuario.atualizar(usuario);
 		return "redirect:home";
 	}
 	
