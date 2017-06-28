@@ -2,9 +2,11 @@ package br.recife.fucturajava4.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import br.recife.fucturajava4.model.Usuario;
 import br.recife.fucturajava4.utils.Logs;
 
 /**
@@ -29,6 +31,17 @@ public class MainInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception {
 		//Obtendo a url da solicitação
 		String url = request.getRequestURI();
+		
+		if(url.endsWith("logar") || url.endsWith("login"))
+			return true;
+		
+		HttpSession session = request.getSession();
+		Usuario logado = (Usuario)session.getAttribute("logado");
+		
+		if(logado == null){
+			response.sendRedirect("login");
+			return false;
+		}
 		
 		//Logando a url no console do servidor e no arquivo de logs
 		Logs.info("[MainInterceptor]::preHandle::URL("+url+")");

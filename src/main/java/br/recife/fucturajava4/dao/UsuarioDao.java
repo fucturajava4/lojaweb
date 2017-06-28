@@ -9,4 +9,6 @@ public interface UsuarioDao {
 	public String atualizar(Usuario usuario);
 	public void remover(long id);
 	public List<Usuario> listar();
+	
+	public Usuario logar(String email, String senha);
 }

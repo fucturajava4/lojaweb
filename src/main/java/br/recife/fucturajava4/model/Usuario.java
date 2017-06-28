@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class Usuario {
 	@Id
 	@GeneratedValue
-	private long id;
+	private long id = 0;
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
 	@Column(name = "email", nullable = false, unique = true)

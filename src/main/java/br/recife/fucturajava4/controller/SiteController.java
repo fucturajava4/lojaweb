@@ -2,7 +2,10 @@ package br.recife.fucturajava4.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.recife.fucturajava4.dao.AcessosDao;
 import br.recife.fucturajava4.dao.UsuarioDao;
+import br.recife.fucturajava4.model.Acessos;
 import br.recife.fucturajava4.model.AtributosIndex;
 import br.recife.fucturajava4.model.Usuario;
 
@@ -30,6 +35,10 @@ public class SiteController {
 	@Autowired
 	@Qualifier("usuarioJpa")
 	private UsuarioDao tabelaUsuario;
+	
+	@Autowired
+	@Qualifier("acessosJpa")
+	private AcessosDao tabelaAcessos;
 	
 	/**
 	 * Método que usado como primeira url do site ou quando é chamado "/home"
@@ -54,6 +63,9 @@ public class SiteController {
 			mensagem = "";
 		}
 		
+		List<Usuario> lista_de_usuarios = tabelaUsuario.listar();
+		model.addAttribute("lista_de_usuarios",lista_de_usuarios);
+		
 		//Retorna a página src/main/webapp/WEB-INF/views/index.jsp
 		return "index";
 	}
@@ -70,4 +82,37 @@ public class SiteController {
 		return "redirect:home";
 	}
 	
+	@RequestMapping("removerUsuario")
+	public String removerUsuario(long id, Model model){
+		tabelaUsuario.remover(id);
+		return "redirect:home";
+	}
+	
+	@RequestMapping("login")
+	public String login(){
+		return "login";
+	}
+	
+	@RequestMapping("logar")
+	public String login(String email, String senha, HttpSession session){
+		
+		Usuario usuario = tabelaUsuario.logar(email, senha);
+		session.setAttribute("logado", usuario);
+		
+		if(usuario != null){
+			Acessos acesso = new Acessos();
+			acesso.setUsuario(usuario);
+			acesso.setData(Calendar.getInstance(new Locale("pt","BR")));
+			
+			tabelaAcessos.setAcesso(acesso);
+		}
+		
+		return "redirect:home";
+	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session){
+		session.invalidate();
+		return "redirect:login";
+	}
 }

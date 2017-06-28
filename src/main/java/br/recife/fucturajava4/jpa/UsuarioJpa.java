@@ -24,20 +24,21 @@ public class UsuarioJpa implements UsuarioDao{
 			return "Usuário cadastrado com exito.";
 		}
 		else
-			return "Já existe usuário cadastrado com este nome ou e-mail.";
+			return "Já existe usuário cadastrado com este e-mail.";
 	}
 
 	private boolean podeCadastrar(Usuario usuario){
-		Query query = manager.createQuery("select u from Usuario as u where u.nome = :nome or u.email = :email");
-		query.setParameter("nome", usuario.getNome());
+		Query query = manager.createQuery("select u from Usuario as u where u.email = :email and u.id != :id");
 		query.setParameter("email", usuario.getEmail());
+		query.setParameter("id", usuario.getId());
 		Usuario cadastrado = null;
 		
 		try{
-			cadastrado = (Usuario) query.getSingleResult();
+			if(query.getSingleResult() != null)
+				cadastrado = (Usuario)query.getSingleResult();
 		}
 		catch(Exception e){
-			e.printStackTrace();
+			cadastrado = null;
 		}
 		
 		if(cadastrado == null)
@@ -53,7 +54,7 @@ public class UsuarioJpa implements UsuarioDao{
 			return "Usuário atualizado com exito.";
 		}
 		else
-			return "Já existe usuário cadastrado com este nome ou e-mail.";
+			return "Já existe usuário cadastrado com este e-mail.";
 	}
 
 	@Override
@@ -73,6 +74,24 @@ public class UsuarioJpa implements UsuarioDao{
 		@SuppressWarnings("unchecked")
 		List<Usuario> lista = query.getResultList();
 		return lista;
+	}
+
+	@Override
+	public Usuario logar(String email, String senha) {
+		Query query = manager.createQuery("select usuario from Usuario as usuario where usuario.email = :email and usuario.senha = :senha");
+		query.setParameter("email", email);
+		query.setParameter("senha", senha);
+		
+		Usuario logado = null;
+		
+		try{
+			logado = (Usuario)query.getSingleResult();
+		}
+		catch(Exception e){
+			logado = null;
+		}
+		
+		return logado;
 	}
 
 }
