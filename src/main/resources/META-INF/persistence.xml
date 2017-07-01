@@ -11,7 +11,7 @@
    <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
    <!-- entidade mapaeada -->
-   <class>br.recife.fucturajava4.model.Acessos</class>
+   <class>br.recife.fucturajava4.model.Acesso</class>
    <class>br.recife.fucturajava4.model.Usuario</class>
    
    <properties>

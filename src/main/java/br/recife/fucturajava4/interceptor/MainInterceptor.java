@@ -32,7 +32,10 @@ public class MainInterceptor extends HandlerInterceptorAdapter{
 		//Obtendo a url da solicitação
 		String url = request.getRequestURI();
 		
-		if(url.endsWith("logar") || url.endsWith("login"))
+		//Logando a url no console do servidor e no arquivo de logs
+		Logs.info("[MainInterceptor]::preHandle::URL("+url+")");
+				
+		if(url.endsWith("logar") || url.endsWith("login") || url.contains("resources/"))
 			return true;
 		
 		HttpSession session = request.getSession();
@@ -42,9 +45,6 @@ public class MainInterceptor extends HandlerInterceptorAdapter{
 			response.sendRedirect("login");
 			return false;
 		}
-		
-		//Logando a url no console do servidor e no arquivo de logs
-		Logs.info("[MainInterceptor]::preHandle::URL("+url+")");
 		
 		//Continua para o controlador (br.recife.fucturajava4.controller.SiteController)
 		return true;

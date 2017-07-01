@@ -1,5 +1,6 @@
 package br.recife.fucturajava4.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "acessos")
-public class Acessos {
+public class Acesso {
 	@Id
 	@GeneratedValue
 	private long id;
@@ -36,6 +37,11 @@ public class Acessos {
 	public Calendar getData() {
 		return data;
 	}
+	public String getFmtData(){
+		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String date = fmt.format(data.getTime());
+		return date;
+	}
 	public void setData(Calendar data) {
 		this.data = data;
 	}
@@ -48,6 +54,6 @@ public class Acessos {
 	
 	@Override
 	public String toString() {
-		return "Acessos [id=" + id + ", data=" + data + ", usuario=" + usuario + "]";
+		return "Acesso [id=" + id + ", data=" + data + ", usuario=" + usuario + "]";
 	}
 }

@@ -1,4 +1,11 @@
-/* Arquivo usado para dar uma melhor visualização às páginas do site */
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    background-color: gray;
+}
 
 .container{
 	background-color: aqua;
@@ -40,4 +47,131 @@
 #form_exibir_usuarios{
 	float: right;
 	background-color: orange;
+}
+
+.login {
+    margin: auto;
+    margin-top: 10%;
+    text-align: center;
+    width: 30%;
+    background-color: white;
+    border: 0.2rem solid burlywood;
+    border-radius: 1rem;
+    box-shadow: 0.5rem 0.5rem 0.8rem 0.1rem black;
+    padding: 1% 1% 1% 1%;
+}
+
+.login form p {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    width: 100%;
+    text-align: left;
+    margin-left: 15%;
+    font-family: cursive;
+}
+
+.login form input {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 1rem;
+    height: 1.2rem;
+    width: 65%;
+}
+
+.login form button {
+    border-radius: 0.4rem;
+    padding: 2% 2% 2% 2%;
+    width: 70%;
+    font-family: cursive;
+    background-color: burlywood;
+}
+
+.usuarios{
+    margin: auto;
+    height: 100%;
+    overflow: auto;
+    width: 90%;
+    margin-left: 5%;
+    background-color: #999999;
+}
+
+.usuario {
+    float: left;
+    width: 31%;
+    background-color: white;
+    overflow: auto;
+    text-align: center;
+    margin-left: 1%;
+    margin-top: 1%;
+    padding-bottom: 1%;
+    border: 0.3rem solid #666666;
+    border-radius: 0.6rem;
+}
+
+.form-atualizar-usuario-content {
+    float: left;
+    width: 70%;
+}
+
+.form-atualizar-usuario-action {
+    float: left;
+    width: 30%;
+    margin: auto;
+    padding-top: 15%;
+}
+
+.form-atualizar-usuario-content p {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    text-align: left;
+    font-family: cursive;
+    margin-left: 3%;
+    margin-top: 3%;
+}
+
+.form-atualizar-usuario-content input {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    text-align: left;
+    margin-left: -12%;
+    width: 80%;
+    height: 1.4rem;
+    border-radius: 0.5rem;
+}
+
+.form-atualizar-usuario-action a, .form-atualizar-usuario-action button {
+    margin-right: 10%;
+    width: 90%;
+    margin-bottom: 10%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.form-atualizar-usuario-action button, .form-atualizar-usuario-action a button {
+    border: 0.2rem solid #cccccc;
+    border-radius: 0.4rem;
+    box-shadow: 0.2rem 0.2rem 0.5rem 0.1rem #666666;
+    cursor: pointer;
+}
+
+#cadastrar_usuario {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    padding-bottom: 0.3%;
+    padding-top: 0.3%;
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+    font-family: cursive;
+    font-size: 85%;
+    background-color: #2AFF2A;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.index_opcoes a button{
+	float:left;
+	margin: 1rem 1rem 1rem 1rem;
+	border-radius: 0.5rem;
+	padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+	background-color: burlywood;
 }
