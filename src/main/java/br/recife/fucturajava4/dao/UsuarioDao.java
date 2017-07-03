@@ -14,4 +14,6 @@ public interface UsuarioDao {
 	public Login logar(String nomeOuEmail, String senha);
 	
 	public void primeiroAcesso();
+	
+	public boolean temRelacionamento(long id);
 }

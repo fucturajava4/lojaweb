@@ -20,3 +20,15 @@ function mostrarMensagem(mensagem){
 	}
 	
 }
+
+function cadastrarUsuario(){
+	$("#form_cadastrar_usuario").dialog({
+		modal: true,
+		buttons: {
+			"Cadastrar": function(){
+				$( this ).dialog("close");
+				$("#form_cadastrar_usuario form").submit();
+			}
+		}
+	});
+}

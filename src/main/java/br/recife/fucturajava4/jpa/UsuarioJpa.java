@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import br.recife.fucturajava4.dao.UsuarioDao;
+import br.recife.fucturajava4.model.Acesso;
 import br.recife.fucturajava4.model.Login;
 import br.recife.fucturajava4.model.Usuario;
 import br.recife.fucturajava4.utils.Logs;
@@ -109,7 +110,7 @@ public class UsuarioJpa implements UsuarioDao{
 		if(conflito == null || usuario.getId() == conflito.getId()){
 			conflito = pegarUsuarioPorEmail(usuario.getEmail());
 			if(conflito == null || usuario.getId() == conflito.getId()){
-				manager.persist(usuario);
+				manager.merge(usuario);
 				Logs.info("[UsuarioJpa]::atualizar::Usuario atualizado com exito.");
 				return "Usuário atualizado com exito.";
 			}
@@ -130,9 +131,15 @@ public class UsuarioJpa implements UsuarioDao{
 	@Override
 	public String remover(long id) {
 		try{
-			manager.remove(pegarUsuarioPorId(id));
-			Logs.info("[UsuarioJpa]::remover::Usuario removido com exito.");
-			return "Usuário removido com êxito.";
+			if(temRelacionamento(id)){
+				Logs.info("[UsuarioJpa]::remover::Usuario nao pode ser removido por obter relacionamento.");
+				return "Usuário já realizou alterações no sistema e não pode ser removido.";
+			}
+			else{
+				manager.remove(pegarUsuarioPorId(id));
+				Logs.info("[UsuarioJpa]::remover::Usuario removido com exito.");
+				return "Usuário removido com êxito.";
+			}
 		}
 		catch(Exception e){
 			Logs.info("[UsuarioJpa]::remover::Falha tentando remover usuário:");
@@ -218,6 +225,31 @@ public class UsuarioJpa implements UsuarioDao{
 		catch(Exception e){
 			Logs.warn("[UsuarioJpa]::primeiroAcesso::Erro ao tentar gravar primeiro usuario no banco de dados.");
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Método que permite verificar se o usuário já teve iterações no sistema, isto é, se ele já gerou relações (como login) no banco de dados.
+	 */
+	@Override
+	public boolean temRelacionamento(long id) {
+		//pesquisa relacionamento na tabela de acessos
+		try{
+			Query q = manager.createQuery("select a from Acesso as a where a.usuario.id = :id");
+			q.setParameter("id", id);
+			
+			@SuppressWarnings("unchecked")
+			List<Acesso> acessos = q.getResultList();
+			
+			if(acessos != null && acessos.size() > 0)
+				return true;
+			else
+				return false;
+		}
+		catch(Exception e){
+			Logs.warn("[UsuarioJpa]::temRelacionamento::Erro ao tentar obter relacionamento de usuário no banco de dados.Exception:\n");
+			e.printStackTrace();
+			return true;
 		}
 	}
 

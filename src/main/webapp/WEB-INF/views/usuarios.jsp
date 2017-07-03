@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="cabecalho.jsp"/>
 
-		<button id="cadastrar_usuario">Cadastrar</button>
+		<button id="cadastrar_usuario" onclick="cadastrarUsuario();">Cadastrar</button>
 		<div class="usuarios">
 			<c:forEach var="usuario" items="${usuarios}">
 				<div class="usuario">
@@ -23,6 +23,16 @@
 					</form>
 				</div>
 			</c:forEach>
+		</div>
+		<div id="form_cadastrar_usuario" title="Cadastrar novo usuário" style="display:none;">
+			<form method="post" action="adicionarUsuario">
+				<p>Nome</p>
+				<input type="text" name="nome">
+				<p>E-mail</p>
+				<input type="text" name="email">
+				<p>Senha</p>
+				<input type="password" name="senha">
+			</form>
 		</div>
 		
 <jsp:include page="rodape.jsp"/>
